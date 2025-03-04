@@ -1,11 +1,16 @@
 <script>
 import { Link } from '@inertiajs/vue3';
-import { User } from 'lucide-vue-next'; // Lucide User ikon importálása
+import { User } from 'lucide-vue-next'; 
 
 export default {
   components: { Link, User },
   props: {
     user: Object,
+  },
+  data() {
+    return {
+      showDropdown: false,
+    };
   },
   computed: {
     userRole() {
@@ -16,6 +21,9 @@ export default {
     }
   },
   methods: {
+    toggleDropdown() {
+      this.showDropdown = !this.showDropdown;
+    },
     logout() {
       this.$inertia.post(route('logout'));
     }
@@ -64,22 +72,21 @@ export default {
       </ul>
 
       <!-- Felhasználói menü -->
-      <div class="flex items-center space-x-6">
-        <Link :href="route('profile.edit')" class="flex items-center">
+      <div class="relative">
+        <button @click="toggleDropdown" class="flex items-center focus:outline-none">
           <img 
             v-if="userProfileImage"
             :src="userProfileImage"
             alt="Profilkép"
-            class="w-10 h-10 rounded-full border-2 border-blue-500 shadow-lg cursor-pointer"
-          />
+            class="w-10 h-10 rounded-full border-2 border-blue-500 shadow-lg cursor-pointer">
           <User v-else class="w-10 h-10 text-gray-400 border-2 border-blue-500 rounded-full p-1 shadow-lg cursor-pointer" />
-        </Link>
-        <button 
-          @click="logout" 
-          class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg shadow-md transition transform hover:scale-105"
-        >
-          Kijelentkezés
         </button>
+        
+        <!-- Dropdown Menü -->
+        <div v-if="showDropdown" class="absolute right-0 mt-2 w-48 bg-gray-800 text-white shadow-lg rounded-lg overflow-hidden z-50">
+          <Link :href="route('profile.edit')" class="block px-4 py-2 hover:bg-gray-600">Profilom</Link>
+          <button @click="logout" class="block w-full text-left px-4 py-2 bg-red-600 hover:bg-red-400">Kijelentkezés</button>
+        </div>
       </div>
     </div>
   </nav>
