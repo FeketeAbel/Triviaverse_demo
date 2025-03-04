@@ -6,6 +6,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { X } from 'lucide-vue-next'; 
 
 defineProps({
     canResetPassword: {
@@ -36,7 +37,12 @@ const submit = () => {
     <Head title="Bejelentkezés - Triviaverse" />
 
     <div class="flex items-center justify-center min-h-screen bg-gray-900 text-white">
-        <div class="bg-gray-800 text-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div class="bg-gray-800 text-white p-8 rounded-lg shadow-lg w-full max-w-md relative">
+
+            <!-- "X" ikon a jobb felső sarokban -->
+            <Link :href="route('welcome')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-200 transition">
+                <X class="w-6 h-6 cursor-pointer" />
+            </Link>
             
             <!-- Tab menü -->
             <div class="flex border-b border-gray-700 mb-6">
